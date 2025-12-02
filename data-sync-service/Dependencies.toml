@@ -454,7 +454,7 @@ modules = [
 
 [[package]]
 org = "wso2"
-name = "g10_data_sync_service"
+name = "data_sync_service"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "file"},
@@ -472,6 +472,6 @@ dependencies = [
 	{org = "ballerinax", name = "health.fhir.r4utils.ccdatofhir"}
 ]
 modules = [
-	{org = "wso2", packageName = "g10_data_sync_service", moduleName = "g10_data_sync_service"}
+	{org = "wso2", packageName = "data_sync_service", moduleName = "data_sync_service"}
 ]
 

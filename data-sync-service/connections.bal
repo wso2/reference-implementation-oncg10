@@ -26,25 +26,6 @@ import ballerinax/health.clients.fhir as fhir;
 import ballerinax/health.fhir.r4;
 import ballerinax/health.fhir.r4utils.ccdatofhir;
 
-// Parse folder paths from configuration map values
-function getFolderPaths() returns string[] {
-    string[] paths = [];
-
-    foreach string clinicName in monitoredFolders.keys() {
-        string? folderPath = monitoredFolders[clinicName];
-        if folderPath is string {
-            string trimmedPath = folderPath.trim();
-            if trimmedPath.length() > 0 {
-                paths.push(trimmedPath);
-            }
-        }
-    }
-
-    return paths;
-}
-
-// Split the monitored folders configuration
-final string[] folderPaths = getFolderPaths();
 
 type RemoteClinicConfig record {|
     string baseURL;
@@ -136,76 +117,27 @@ function isChildDirectory(string parent, string possibleChild) returns boolean {
     return normalizedChild.startsWith(prefix);
 }
 
-function filterLeafDirectories(string[] directories) returns string[] {
-    string[] leaves = [];
-
-    foreach string directory in directories {
-        boolean isLeaf = true;
-        foreach string other in directories {
-            if isSameDirectory(directory, other) {
-                continue;
-            }
-
-            if isChildDirectory(directory, other) {
-                isLeaf = false;
-                break;
-            }
-        }
-
-        if isLeaf {
-            boolean alreadyAdded = false;
-            foreach string leaf in leaves {
-                if isSameDirectory(leaf, directory) {
-                    alreadyAdded = true;
-                    break;
-                }
-            }
-            if alreadyAdded {
-                continue;
-            }
-            leaves.push(directory);
-        }
+function deriveParentDirectory(string directoryPath) returns string {
+    string normalizedPath = normalizeDirectoryPath(directoryPath);
+    if normalizedPath.length() == 0 {
+        return normalizedPath;
     }
 
-    return leaves;
-}
-
-function collectDirectoriesRecursively(ftp:Client ftpClient, string basePath) returns string[]|error {
-    string[] directories = [basePath];
-
-    ftp:FileInfo[] entries = check ftpClient->list(path = basePath);
-    foreach ftp:FileInfo entry in entries {
-        if !entry.isFile && !isSkippableDirectory(entry.name) {
-            string childPath = entry.path;
-            string[] nestedDirectories = check collectDirectoriesRecursively(ftpClient, childPath);
-            foreach string nestedDirectory in nestedDirectories {
-                if !containsString(directories, nestedDirectory) {
-                    directories.push(nestedDirectory);
-                }
-            }
-        }
+    if normalizedPath == "/" {
+        return "/";
     }
 
-    return directories;
-}
-
-function discoverMonitorableDirectories() returns string[]|error {
-    ftp:Client ftpClient = check createSftpClient();
-    string[] monitorable = [];
-
-    foreach string rootPath in folderPaths {
-        string[] directories = check collectDirectoriesRecursively(ftpClient, rootPath);
-        foreach string directory in directories {
-            if !containsString(monitorable, directory) {
-                monitorable.push(directory);
-            }
+    int? lastSlashIndex = normalizedPath.lastIndexOf("/");
+    if lastSlashIndex is int {
+        int slashIndex = lastSlashIndex;
+        if slashIndex <= 0 {
+            return "/";
         }
+        return normalizedPath.substring(0, slashIndex);
     }
 
-    return monitorable;
+    return "/";
 }
-
-final string[] monitorDirectoryPaths = check discoverMonitorableDirectories();
 
 function resolveClinicName(string filePath) returns string? {
     string? matchedClinic = ();
@@ -867,21 +799,28 @@ function extractResourceIdFromResponse(fhir:FHIRResponse response, string resour
 }
 
 function updateReferenceLink(map<ReferenceLink> referenceLinkMap, string? placeholder, string resourceType,
-        string? resourceId) {
-    if placeholder is () || resourceId is () {
+        string? resourceId, string? previousResourceId = ()) {
+    if placeholder is () && resourceId is () {
         return;
     }
 
-    string placeholderValue = placeholder;
-    string resolvedId = resourceId;
+    ReferenceLink placeholderLink = {resourceType: resourceType, resolvedId: resourceId};
+    if placeholder is string {
+        referenceLinkMap[placeholder] = placeholderLink;
+    }
 
-    ReferenceLink? existingLink = referenceLinkMap[placeholderValue];
-    if existingLink is ReferenceLink {
-        existingLink.resourceType = resourceType;
-        existingLink.resolvedId = resolvedId;
-        referenceLinkMap[placeholderValue] = existingLink;
-    } else {
-        referenceLinkMap[placeholderValue] = {resourceType: resourceType, resolvedId: resolvedId};
+    if resourceId is () {
+        return;
+    }
+
+    string resolvedId = resourceId;
+    ReferenceLink resolvedLink = {resourceType: resourceType, resolvedId: resolvedId};
+    string canonicalKey = string `${resourceType}/${resolvedId}`;
+    referenceLinkMap[canonicalKey] = resolvedLink;
+
+    if previousResourceId is string && previousResourceId.length() > 0 && previousResourceId != resolvedId {
+        string previousKey = string `${resourceType}/${previousResourceId}`;
+        referenceLinkMap[previousKey] = resolvedLink;
     }
 }
 
@@ -932,11 +871,13 @@ function processBundleEntry(string clinicName, fhir:FHIRConnector fhirConnector,
     string resourceType = entryContext.resourceType;
 
     string? resourceId = resolveResourceId(resourcePayload);
+    string? originalResourceId = resourceId;
     if method == "PUT" && resourceId is () {
         string? derivedId = resolveIdFromUrl(entryContext.requestUrl, resourceType);
         if derivedId is string {
             resourcePayload["id"] = derivedId;
             resourceId = derivedId;
+            originalResourceId = resourceId;
         }
     }
     updateReferenceLink(referenceLinkMap, entryContext.fullUrl, resourceType, resourceId);
@@ -951,8 +892,9 @@ function processBundleEntry(string clinicName, fhir:FHIRConnector fhirConnector,
                 entryContext.requestUrl);
             if createdId is string {
                 resourcePayload["id"] = createdId;
+                string? previousResourceId = originalResourceId;
                 resourceId = createdId;
-                updateReferenceLink(referenceLinkMap, entryContext.fullUrl, resourceType, createdId);
+                updateReferenceLink(referenceLinkMap, entryContext.fullUrl, resourceType, createdId, previousResourceId);
             }
             baseLogContext = createBaseLogContext(clinicName, resourceType, method, resourceId);
             logFhirSuccess("create", clinicName, baseLogContext, createResult);
@@ -966,8 +908,9 @@ function processBundleEntry(string clinicName, fhir:FHIRConnector fhirConnector,
                 entryContext.requestUrl);
             if updatedId is string {
                 resourcePayload["id"] = updatedId;
+                string? previousResourceId = originalResourceId;
                 resourceId = updatedId;
-                updateReferenceLink(referenceLinkMap, entryContext.fullUrl, resourceType, updatedId);
+                updateReferenceLink(referenceLinkMap, entryContext.fullUrl, resourceType, updatedId, previousResourceId);
             }
             baseLogContext = createBaseLogContext(clinicName, resourceType, method, resourceId);
             logFhirSuccess("update", clinicName, baseLogContext, updateResult);
@@ -1064,7 +1007,7 @@ function sendFhirBundle(string clinicName, r4:Bundle bundle) returns error? {
                         string[] dependencyPlaceholders = collectReferencePlaceholders(resourcePayload, resourceType);
 
                         if fullUrl is string {
-                            referenceLinkMap[fullUrl] = {resourceType: resourceType, resolvedId: resourceId};
+                            updateReferenceLink(referenceLinkMap, fullUrl, resourceType, resourceId);
                         }
 
                         entryContexts.push({
@@ -1180,101 +1123,139 @@ function processCcdaDocument(string filePath, byte[] fileContent) returns error?
     return sendFhirBundle(clinicName, bundle);
 }
 
-// Initialize FTP listeners for all configured folders
-function initializeFtpListeners() returns ftp:Listener[]|error {
-    io:println("Setting up FTP listeners for monitored folders...");
-    ftp:Listener[] listeners = [];
-    
-    string[] leafDirectories = filterLeafDirectories(monitorDirectoryPaths);
+function readFileContent(stream<byte[] & readonly, io:Error?> fileStream) returns byte[]|error {
+    byte[] completeContent = [];
 
-    foreach string folderPath in leafDirectories {
-        ftp:ListenerConfiguration listenerConfig = {
-            protocol: ftp:SFTP,
-            host: sftpHost,
-            port: sftpPort,
-            path: folderPath,
-            auth: {
-                credentials: {
-                    username: sftpUsername,
-                    password: sftpPassword
-                }
-            },
-            pollingInterval: 10
-        };
-        
-        ftp:Listener ftpListener = check new (listenerConfig);
-        listeners.push(ftpListener);
-    }
-    
-    return listeners;
+    check fileStream.forEach(function(byte[] & readonly chunk) {
+        foreach byte byteValue in chunk {
+            completeContent.push(byteValue);
+        }
+    });
+
+    return completeContent;
 }
 
-// Create FTP listeners for each monitored folder
-final ftp:Listener[] ftpListeners = check initializeFtpListeners();
+function processClinicDirectory(string clinicName, string clinicFolderPath) returns error? {
+    ftp:Client ftpClient = check createSftpClient();
+    string normalizedClinicPath = ensureLeadingSlash(normalizeDirectoryPath(clinicFolderPath));
+
+    log:printInfo("Starting clinic folder scan.",
+        properties = {clinicName: clinicName, clinicFolderPath: normalizedClinicPath});
+
+    error? result = processDirectoryRecursively(ftpClient, clinicName, normalizedClinicPath, normalizedClinicPath);
+    if result is error {
+        log:printError("Clinic folder scan failed.", properties = {
+            clinicName: clinicName,
+            clinicFolderPath: normalizedClinicPath,
+            errorMessage: result.message()
+        });
+        return result;
+    }
+
+    log:printDebug("Completed clinic folder scan.",
+        properties = {clinicName: clinicName, clinicFolderPath: normalizedClinicPath});
+}
 
 // Process a single file using FTP client
-function processFile(ftp:Client ftpClient, ftp:FileInfo file) returns error? {
-    io:println(string `Processing file: ${file.path}`);
-    
-    // Read file content (using deprecated method as it's still functional)
+function processFile(ftp:Client ftpClient, string clinicName, string clinicFolderPath, ftp:FileInfo file)
+    returns error? {
+
     stream<byte[] & readonly, io:Error?> fileStream = check ftpClient->get(path = file.path);
     byte[] fileContent = check readFileContent(fileStream);
-    
-    io:println(string `Processed file: ${file.name} (${fileContent.length()} bytes)`);
-    
+
     check processCcdaDocument(file.path, fileContent);
+
+    string targetPath = computeProcessedFilePath(file.path);
+    check ensureProcessedDestination(ftpClient, targetPath);
+    check ftpClient->rename(file.path, targetPath);
+
+    log:printInfo("Moved processed file.",
+        properties = {clinicName: clinicName, sourcePath: file.path, processedPath: targetPath});
 }
 
-// Process existing files in monitored folders
-function processExistingFiles() returns error? {
-    io:println("Checking for existing files in monitored folders...");
-    
-    ftp:Client ftpClient = check createSftpClient();
-    
-    foreach string folderPath in folderPaths {
-        io:println(string `Checking folder: ${folderPath}`);
-        
-        check processDirectoryRecursively(ftpClient, folderPath);
-    }
-    
-    io:println("Finished processing existing files.");
-}
+function processDirectoryRecursively(ftp:Client ftpClient, string clinicName, string clinicFolderPath,
+        string directoryPath) returns error? {
 
-function processDirectoryRecursively(ftp:Client ftpClient, string directoryPath) returns error? {
     ftp:FileInfo[] entries = check ftpClient->list(path = directoryPath);
 
     if entries.length() == 0 {
-        io:println(string `No entries found in ${directoryPath}`);
+        log:printDebug("No entries found in directory.",
+            properties = {clinicName: clinicName, directoryPath: directoryPath});
         return;
     }
 
     foreach ftp:FileInfo entry in entries {
         if entry.isFile {
-            check processFile(ftpClient, entry);
+            check processFile(ftpClient, clinicName, clinicFolderPath, entry);
         } else if !entry.isFile && !isSkippableDirectory(entry.name) {
-            io:println(string `Descending into directory: ${entry.path}`);
-            check processDirectoryRecursively(ftpClient, entry.path);
+            if isProcessedDirectory(entry.name) {
+                log:printDebug("Skipping processed directory.",
+                    properties = {clinicName: clinicName, directoryPath: entry.path});
+                continue;
+            }
+            check processDirectoryRecursively(ftpClient, clinicName, clinicFolderPath, entry.path);
         }
     }
 }
 
-// Initialize and start FTP listeners
-public function startFtpListeners() returns error? {
-    io:println("Initializing FTP listeners for monitored folders...");
-    
-    // First, process any existing files
-    check processExistingFiles();
-    
-    // Then start listeners for new files
-    int listenerCount = 0;
-    foreach ftp:Listener ftpListener in ftpListeners {
-        listenerCount = listenerCount + 1;
-        io:println(string `Attaching service to listener ${listenerCount}...`);
-        check ftpListener.attach(sftpService);
-        io:println(string `Starting listener ${listenerCount}...`);
-        check ftpListener.'start();
-        io:println(string `Listener ${listenerCount} started successfully.`);
-    }
-    
-    io:println(string `Successfully initialized and started ${ftpListeners.length()} FTP listener(s).`);
+function computeProcessedFilePath(string filePath) returns string {
+    string parentDirectory = deriveParentDirectory(filePath);
+    string processedDirectory = parentDirectory == "/" ?
+        "/processed" : string `${parentDirectory}/processed`;
+    string fileName = extractFileName(filePath);
+    return string `${processedDirectory}/${fileName}`;
 }
+
+function ensureProcessedDestination(ftp:Client ftpClient, string targetFilePath) returns error? {
+    string processedDirectory = deriveParentDirectory(targetFilePath);
+    if processedDirectory.length() == 0 {
+        return;
+    }
+
+    check ensureRemoteDirectory(ftpClient, processedDirectory);
+}
+
+function ensureRemoteDirectory(ftp:Client ftpClient, string directoryPath) returns error? {
+    if directoryPath.length() == 0 || directoryPath == "/" {
+        return;
+    }
+
+    var isDirectoryResult = ftpClient->isDirectory(directoryPath);
+    if isDirectoryResult is boolean {
+        if isDirectoryResult {
+            return;
+        }
+    } else {
+        return isDirectoryResult;
+    }
+
+    string parentDirectory = deriveParentDirectory(directoryPath);
+    if parentDirectory != directoryPath {
+        check ensureRemoteDirectory(ftpClient, parentDirectory);
+    }
+
+    ftp:Error? creationResult = ftpClient->mkdir(directoryPath);
+    if creationResult is ftp:Error {
+        var recheckResult = ftpClient->isDirectory(directoryPath);
+        if recheckResult is boolean && recheckResult {
+            return;
+        }
+        return creationResult;
+    }
+}
+
+function isProcessedDirectory(string directoryName) returns boolean {
+    return strings:toLowerAscii(directoryName) == "processed";
+}
+
+function extractFileName(string filePath) returns string {
+    int? lastSlashIndex = filePath.lastIndexOf("/");
+    if lastSlashIndex is int {
+        int index = lastSlashIndex;
+        if index >= 0 && index < filePath.length() - 1 {
+            return filePath.substring(index + 1);
+        }
+    }
+    return filePath;
+}
+
