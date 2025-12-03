@@ -936,7 +936,14 @@ final r4:ResourceAPIConfig observationApiConfig = {
         "http://hl7.org/fhir/us/core/StructureDefinition/us-core-vital-signs",
         "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-sexual-orientation",
         "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-pregnancyintent",
-        "http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation"
+        "http://hl7.org/fhir/us/core/StructureDefinition/us-core-simple-observation",
+        "http://hl7.org/fhir/us/core/StructureDefinition/us-core-smokingstatus",
+        "http://hl7.org/fhir/StructureDefinition/bodytemp",
+        "http://hl7.org/fhir/StructureDefinition/bp",
+        "http://hl7.org/fhir/StructureDefinition/bodyweight",
+        "http://hl7.org/fhir/StructureDefinition/heartrate",
+        "http://hl7.org/fhir/StructureDefinition/bodyheight",
+        "http://hl7.org/fhir/StructureDefinition/resprate"
     ],
     defaultProfile: (),
     searchParameters: [
@@ -990,7 +997,11 @@ final r4:ResourceAPIConfig observationApiConfig = {
 
     ],
     serverConfig: (),
-    authzConfig: ()
+    authzConfig: (),
+    paginationConfig: {
+        enabled: true, 
+        pageSize: 100
+    }
 };
 
 final r4:ResourceAPIConfig immunizationApiConfig = {
