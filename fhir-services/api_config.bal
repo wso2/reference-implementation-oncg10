@@ -912,6 +912,166 @@ final r4:ResourceAPIConfig medicationApiConfig = {
     authzConfig: ()
 };
 
+final r4:ResourceAPIConfig medicationDispenseApiConfig = {
+    resourceType: "MedicationDispense",
+    profiles: [
+        "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationdispense"
+    ],
+    defaultProfile: (),
+    searchParameters: [
+        {
+            name: "type",
+            active: true,
+            information: {
+                description: "**active | inactive | resolved**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "http://hl7.org/fhir/us/core/SearchParameter/us-core-medicationdispense-type"
+            }
+        },
+        {
+            name: "patient",
+            active: true,
+            information: {
+                description: "**Who the sensitivity is for**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "http://hl7.org/fhir/us/core/SearchParameter/us-core-allergyintolerance-patient"
+            }
+        },
+        {
+            name: "status",
+            active: true,
+            information: {
+                description: "**Logical id of this artifact**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "http://hl7.org/fhir/us/core/SearchParameter/us-core-patient-id"
+            }
+        }
+    ],
+    operations: [
+
+    ],
+    serverConfig: (),
+    authzConfig: ()
+};
+
+final r4:ResourceAPIConfig coverageApiConfig = {
+    resourceType: "Coverage",
+    profiles: [
+        "http://hl7.org/fhir/us/core/StructureDefinition/us-core-coverage"
+    ],
+    defaultProfile: (),
+    searchParameters: [
+        {
+            name: "patient",
+            active: true,
+            information: {
+                description: "**Who the sensitivity is for**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "https://hl7.org/fhir/us/core/STU8.0.1/StructureDefinition-us-core-coverage.html"
+            }
+        }
+    ],
+    operations: [
+
+    ],
+    serverConfig: (),
+    authzConfig: ()
+};
+
+final r4:ResourceAPIConfig serviceRequestApiConfig = {
+    resourceType: "ServiceRequest",
+    profiles: [
+        "http://hl7.org/fhir/us/core/StructureDefinition/us-core-servicerequest"
+    ],
+    defaultProfile: (),
+    searchParameters: [
+        {
+            name: "patient",
+            active: true,
+            information: {
+                description: "**Who the sensitivity is for**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "https://hl7.org/fhir/us/core/STU8.0.1/SearchParameter-us-core-servicerequest-patient.html"
+            }
+        },
+        {
+            name: "status",
+            active: true,
+            information: {
+                description: "**Logical id of this artifact**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "https://hl7.org/fhir/us/core/STU8.0.1/SearchParameter-us-core-servicerequest-status.html"
+            }
+        },
+        {
+            name: "code",
+            active: true,
+            information: {
+                description: "**The code of the observation type**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "https://hl7.org/fhir/us/core/STU8.0.1/SearchParameter-us-core-servicerequest-code.html"
+            }
+        },
+        {
+            name: "authored",
+            active: true,
+            information: {
+                description: "**The code of the observation type**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "https://hl7.org/fhir/us/core/STU8.0.1/SearchParameter-us-core-servicerequest-authored.html"
+            }
+        }
+    ],
+    operations: [
+
+    ],
+    serverConfig: (),
+    authzConfig: ()
+};
+
+final r4:ResourceAPIConfig specimenApiConfig = {
+    resourceType: "Specimen",
+    profiles: [
+        "http://hl7.org/fhir/us/core/StructureDefinition/us-core-specimen"
+    ],
+    defaultProfile: (),
+    searchParameters: [
+        {
+            name: "patient",
+            active: true,
+            information: {
+                description: "**Who the sensitivity is for**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "https://hl7.org/fhir/us/core/STU8.0.1/SearchParameter-us-core-specimen-patient.html"
+            }
+        },
+        {
+            name: "_id",
+            active: true,
+            information: {
+                description: "**Logical id of this artifact**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "http://hl7.org/fhir/us/core/SearchParameter/us-core-specimen-id.html"
+            }
+        },
+        {
+            name: "_include",
+            active: true,
+            information: {
+                description: "**Logical id of this artifact**  **NOTE**: This US Core SearchParameter definition extends the usage context of the[Conformance expectation extension](http://hl7.org/fhir/R4/extension-capabilitystatement-expectation.html) - multipleAnd - multipleOr - comparator - modifier - chain",
+                builtin: false,
+                documentation: "http://hl7.org/fhir/us/core/SearchParameter/us-core-specimen-include.html"
+            }
+        }
+
+    ],
+    operations: [
+
+    ],
+    serverConfig: (),
+    authzConfig: ()
+};
+
 final r4:ResourceAPIConfig observationApiConfig = {
     resourceType: "Observation",
     profiles: [

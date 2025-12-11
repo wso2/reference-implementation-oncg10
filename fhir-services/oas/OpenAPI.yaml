@@ -1130,6 +1130,318 @@ paths:
       - default: []
       x-auth-type: Application & Application User
 
+  /fhir/r4/Coverage/:
+    get:
+      tags:
+      - GET
+      - Coverage
+      parameters:
+      - name: code
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Code that identifies the allergy or intolerance\r\n* [Condition](condition.html):\
+          \ Code for the condition\r\n* [DeviceRequest](devicerequest.html): Code\
+          \ for what is being requested/ordered\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The code for the report, as opposed to codes for the atomic results, which\
+          \ are the names on the observation resource referred to from the result\r\
+          \n* [FamilyMemberHistory](familymemberhistory.html): A search by a condition\
+          \ code\r\n* [List](list.html): What the purpose of this list is\r\n* [Medication](medication.html):\
+          \ Returns medications for a specific code\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations of this medication code\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses of this medicine code\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions of this medication code\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements of this medication code\r\n* [Observation](observation.html):\
+          \ The code of the observation type\r\n* [Procedure](procedure.html): A code\
+          \ to identify a  procedure\r\n* [ServiceRequest](servicerequest.html): What\
+          \ is being requested/ordered"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: identifier
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ External ids for this item\r\n* [CarePlan](careplan.html): External Ids\
+          \ for this plan\r\n* [CareTeam](careteam.html): External Ids for this team\r\
+          \n* [Composition](composition.html): Version-independent identifier for\
+          \ the Composition\r\n* [Condition](condition.html): A unique identifier\
+          \ of the condition record\r\n* [Consent](consent.html): Identifier for this\
+          \ record (external references)\r\n* [DetectedIssue](detectedissue.html):\
+          \ Unique id for the detected issue\r\n* [DeviceRequest](devicerequest.html):\
+          \ Business identifier for request/order\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ An identifier for the report\r\n* [DocumentManifest](documentmanifest.html):\
+          \ Unique Identifier for the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Master Version Specific Identifier\r\n* [Encounter](encounter.html): Identifier(s)\
+          \ by which this encounter is known\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ Business Identifier(s) relevant for this EpisodeOfCare\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ A search by a record identifier\r\n* [Goal](goal.html): External Ids for\
+          \ this goal\r\n* [ImagingStudy](imagingstudy.html): Identifiers for the\
+          \ Study, such as DICOM Study Instance UID and Accession number\r\n* [Immunization](immunization.html):\
+          \ Business identifier\r\n* [List](list.html): Business identifier\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations with this external identifier\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses with this external identifier\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions with this external identifier\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements with this external identifier\r\n* [NutritionOrder](nutritionorder.html):\
+          \ Return nutrition orders with this external identifier\r\n* [Observation](observation.html):\
+          \ The unique id for a particular observation\r\n* [Procedure](procedure.html):\
+          \ A unique identifier for a procedure\r\n* [RiskAssessment](riskassessment.html):\
+          \ Unique identifier for the assessment\r\n* [ServiceRequest](servicerequest.html):\
+          \ Identifiers assigned to this order\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ External identifier\r\n* [SupplyRequest](supplyrequest.html): Business\
+          \ Identifier for SupplyRequest\r\n* [VisionPrescription](visionprescription.html):\
+          \ Return prescriptions with this external identifier"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: patient
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Who the sensitivity is for\r\n* [CarePlan](careplan.html): Who the care\
+          \ plan is for\r\n* [CareTeam](careteam.html): Who care team is for\r\n*\
+          \ [ClinicalImpression](clinicalimpression.html): Patient or group assessed\r\
+          \n* [Composition](composition.html): Who and/or what the composition is\
+          \ about\r\n* [Condition](condition.html): Who has the condition?\r\n* [Consent](consent.html):\
+          \ Who the consent applies to\r\n* [DetectedIssue](detectedissue.html): Associated\
+          \ patient\r\n* [DeviceRequest](devicerequest.html): Individual the service\
+          \ is ordered for\r\n* [DeviceUseStatement](deviceusestatement.html): Search\
+          \ by subject - a patient\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The subject of the report if a patient\r\n* [DocumentManifest](documentmanifest.html):\
+          \ The subject of the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Who/what is the subject of the document\r\n* [Encounter](encounter.html):\
+          \ The patient or group present at the encounter\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ The patient who is the focus of this episode of care\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ The identity of a subject to list family member history items for\r\n\
+          * [Flag](flag.html): The identity of a subject to list flags for\r\n* [Goal](goal.html):\
+          \ Who this goal is intended for\r\n* [ImagingStudy](imagingstudy.html):\
+          \ Who the study is about\r\n* [Immunization](immunization.html): The patient\
+          \ for the vaccination record\r\n* [List](list.html): If all resources have\
+          \ the same subject\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ The identity of a patient to list administrations  for\r\n* [MedicationDispense](medicationdispense.html):\
+          \ The identity of a patient to list dispenses  for\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Returns prescriptions for a specific patient\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Returns statements for a specific patient.\r\n* [NutritionOrder](nutritionorder.html):\
+          \ The identity of the person who requires the diet, formula or nutritional\
+          \ supplement\r\n* [Observation](observation.html): The subject that the\
+          \ observation is about (if patient)\r\n* [Procedure](procedure.html): Search\
+          \ by subject - a patient\r\n* [RiskAssessment](riskassessment.html): Who/what\
+          \ does assessment apply to?\r\n* [ServiceRequest](servicerequest.html):\
+          \ Search by subject - a patient\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ Patient for whom the item is supplied\r\n* [VisionPrescription](visionprescription.html):\
+          \ The identity of a patient to list dispenses for"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: abatement-age
+        in: query
+        description: Abatement as age or age range
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: quantity
+      - name: abatement-date
+        in: query
+        description: Date-related abatements (dateTime and period)
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: date
+      - name: abatement-string
+        in: query
+        description: Abatement as a string
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: string
+      - name: asserter
+        in: query
+        description: Person who asserts this condition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: body-site
+        in: query
+        description: "Anatomical location, if relevant"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: category
+        in: query
+        description: The category of the condition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: clinical-status
+        in: query
+        description: The clinical status of the condition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: encounter
+        in: query
+        description: Encounter created as part of
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: evidence
+        in: query
+        description: Manifestation/symptom
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: evidence-detail
+        in: query
+        description: Supporting information found elsewhere
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: onset-age
+        in: query
+        description: Onsets as age or age range
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: quantity
+      - name: onset-date
+        in: query
+        description: Date related onsets (dateTime and Period)
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: date
+      - name: onset-info
+        in: query
+        description: Onsets as a string
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: string
+      - name: recorded-date
+        in: query
+        description: Date record was first recorded
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: date
+      - name: severity
+        in: query
+        description: The severity of the condition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: stage
+        in: query
+        description: Simple summary (disease specific)
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: subject
+        in: query
+        description: Who has the condition?
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: verification-status
+        in: query
+        description: unconfirmed | provisional | differential | confirmed | refuted
+          | entered-in-error
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - $ref: '#/components/parameters/_lastUpdatedParam'
+      - $ref: '#/components/parameters/_securityParam'
+      - $ref: '#/components/parameters/_tagParam'
+      - $ref: '#/components/parameters/_idParam'
+      - $ref: '#/components/parameters/_sourceParam'
+      - $ref: '#/components/parameters/_profileParam'
+      responses:
+        "200":
+          description: search Condition operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/Coverage/{id}:
+    get:
+      tags:
+      - GET
+      - Coverage
+      parameters:
+      - name: id
+        in: path
+        description: logical identifier
+        required: true
+        schema:
+          type: string
+          example: null
+      responses:
+        "200":
+          description: read Condition operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Condition'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/Coverage/_search:
+    post:
+      tags:
+      - Coverage
+      - POST
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: search Patient operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+
   /fhir/r4/Device/:
     get:
       tags:
@@ -3730,6 +4042,304 @@ paths:
       - default: []
       x-auth-type: Application & Application User
 
+  /fhir/r4/MedicationDispense/:
+    get:
+      tags:
+      - MedicationDispense
+      parameters:
+      - name: code
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Code that identifies the allergy or intolerance\r\n* [Condition](condition.html):\
+          \ Code for the condition\r\n* [DeviceRequest](devicerequest.html): Code\
+          \ for what is being requested/ordered\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The code for the report, as opposed to codes for the atomic results, which\
+          \ are the names on the observation resource referred to from the result\r\
+          \n* [FamilyMemberHistory](familymemberhistory.html): A search by a condition\
+          \ code\r\n* [List](list.html): What the purpose of this list is\r\n* [Medication](medication.html):\
+          \ Returns medications for a specific code\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations of this medication code\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses of this medicine code\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions of this medication code\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements of this medication code\r\n* [Observation](observation.html):\
+          \ The code of the observation type\r\n* [Procedure](procedure.html): A code\
+          \ to identify a  procedure\r\n* [ServiceRequest](servicerequest.html): What\
+          \ is being requested/ordered"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: date
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Date first version of the resource instance was recorded\r\n* [CarePlan](careplan.html):\
+          \ Time period plan covers\r\n* [CareTeam](careteam.html): Time period team\
+          \ covers\r\n* [ClinicalImpression](clinicalimpression.html): When the assessment\
+          \ was documented\r\n* [Composition](composition.html): Composition editing\
+          \ time\r\n* [Consent](consent.html): When this Consent was created or indexed\r\
+          \n* [DiagnosticReport](diagnosticreport.html): The clinically relevant time\
+          \ of the report\r\n* [Encounter](encounter.html): A date within the period\
+          \ the Encounter lasted\r\n* [EpisodeOfCare](episodeofcare.html): The provided\
+          \ date search value falls within the episode of care's period\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ When history was recorded or last updated\r\n* [Flag](flag.html): Time\
+          \ period when flag is active\r\n* [Immunization](immunization.html): Vaccination\
+          \  (non)-Administration Date\r\n* [List](list.html): When the list was prepared\r\
+          \n* [Observation](observation.html): Obtained date/time. If the obtained\
+          \ element is a period, a date that falls in the period\r\n* [Procedure](procedure.html):\
+          \ When the procedure was performed\r\n* [RiskAssessment](riskassessment.html):\
+          \ When was assessment made?\r\n* [SupplyRequest](supplyrequest.html): When\
+          \ the request was made"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: date
+      - name: identifier
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ External ids for this item\r\n* [CarePlan](careplan.html): External Ids\
+          \ for this plan\r\n* [CareTeam](careteam.html): External Ids for this team\r\
+          \n* [Composition](composition.html): Version-independent identifier for\
+          \ the Composition\r\n* [Condition](condition.html): A unique identifier\
+          \ of the condition record\r\n* [Consent](consent.html): Identifier for this\
+          \ record (external references)\r\n* [DetectedIssue](detectedissue.html):\
+          \ Unique id for the detected issue\r\n* [DeviceRequest](devicerequest.html):\
+          \ Business identifier for request/order\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ An identifier for the report\r\n* [DocumentManifest](documentmanifest.html):\
+          \ Unique Identifier for the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Master Version Specific Identifier\r\n* [Encounter](encounter.html): Identifier(s)\
+          \ by which this encounter is known\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ Business Identifier(s) relevant for this EpisodeOfCare\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ A search by a record identifier\r\n* [Goal](goal.html): External Ids for\
+          \ this goal\r\n* [ImagingStudy](imagingstudy.html): Identifiers for the\
+          \ Study, such as DICOM Study Instance UID and Accession number\r\n* [Immunization](immunization.html):\
+          \ Business identifier\r\n* [List](list.html): Business identifier\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations with this external identifier\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses with this external identifier\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions with this external identifier\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements with this external identifier\r\n* [NutritionOrder](nutritionorder.html):\
+          \ Return nutrition orders with this external identifier\r\n* [Observation](observation.html):\
+          \ The unique id for a particular observation\r\n* [Procedure](procedure.html):\
+          \ A unique identifier for a procedure\r\n* [RiskAssessment](riskassessment.html):\
+          \ Unique identifier for the assessment\r\n* [ServiceRequest](servicerequest.html):\
+          \ Identifiers assigned to this order\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ External identifier\r\n* [SupplyRequest](supplyrequest.html): Business\
+          \ Identifier for SupplyRequest\r\n* [VisionPrescription](visionprescription.html):\
+          \ Return prescriptions with this external identifier"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: patient
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Who the sensitivity is for\r\n* [CarePlan](careplan.html): Who the care\
+          \ plan is for\r\n* [CareTeam](careteam.html): Who care team is for\r\n*\
+          \ [ClinicalImpression](clinicalimpression.html): Patient or group assessed\r\
+          \n* [Composition](composition.html): Who and/or what the composition is\
+          \ about\r\n* [Condition](condition.html): Who has the condition?\r\n* [Consent](consent.html):\
+          \ Who the consent applies to\r\n* [DetectedIssue](detectedissue.html): Associated\
+          \ patient\r\n* [DeviceRequest](devicerequest.html): Individual the service\
+          \ is ordered for\r\n* [DeviceUseStatement](deviceusestatement.html): Search\
+          \ by subject - a patient\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The subject of the report if a patient\r\n* [DocumentManifest](documentmanifest.html):\
+          \ The subject of the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Who/what is the subject of the document\r\n* [Encounter](encounter.html):\
+          \ The patient or group present at the encounter\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ The patient who is the focus of this episode of care\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ The identity of a subject to list family member history items for\r\n\
+          * [Flag](flag.html): The identity of a subject to list flags for\r\n* [Goal](goal.html):\
+          \ Who this goal is intended for\r\n* [ImagingStudy](imagingstudy.html):\
+          \ Who the study is about\r\n* [Immunization](immunization.html): The patient\
+          \ for the vaccination record\r\n* [List](list.html): If all resources have\
+          \ the same subject\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ The identity of a patient to list administrations  for\r\n* [MedicationDispense](medicationdispense.html):\
+          \ The identity of a patient to list dispenses  for\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Returns prescriptions for a specific patient\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Returns statements for a specific patient.\r\n* [NutritionOrder](nutritionorder.html):\
+          \ The identity of the person who requires the diet, formula or nutritional\
+          \ supplement\r\n* [Observation](observation.html): The subject that the\
+          \ observation is about (if patient)\r\n* [Procedure](procedure.html): Search\
+          \ by subject - a patient\r\n* [RiskAssessment](riskassessment.html): Who/what\
+          \ does assessment apply to?\r\n* [ServiceRequest](servicerequest.html):\
+          \ Search by subject - a patient\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ Patient for whom the item is supplied\r\n* [VisionPrescription](visionprescription.html):\
+          \ The identity of a patient to list dispenses for"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: encounter
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [Composition](composition.html):\
+          \ Context of the Composition\r\n* [DeviceRequest](devicerequest.html): Encounter\
+          \ during which request was created\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The Encounter when the order was made\r\n* [DocumentReference](documentreference.html):\
+          \ Context of the document  content\r\n* [Flag](flag.html): Alert relevant\
+          \ during encounter\r\n* [List](list.html): Context in which list created\r\
+          \n* [NutritionOrder](nutritionorder.html): Return nutrition orders with\
+          \ this encounter identifier\r\n* [Observation](observation.html): Encounter\
+          \ related to the observation\r\n* [Procedure](procedure.html): Encounter\
+          \ created as part of\r\n* [RiskAssessment](riskassessment.html): Where was\
+          \ assessment performed?\r\n* [ServiceRequest](servicerequest.html): An encounter\
+          \ in which this request is made\r\n* [VisionPrescription](visionprescription.html):\
+          \ Return prescriptions with this encounter identifier"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: based-on
+        in: query
+        description: A request for this procedure
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: category
+        in: query
+        description: Classification of the procedure
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: instantiates-canonical
+        in: query
+        description: Instantiates FHIR protocol or definition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: instantiates-uri
+        in: query
+        description: Instantiates external protocol or definition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: uri
+      - name: location
+        in: query
+        description: Where the procedure happened
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: part-of
+        in: query
+        description: Part of referenced event
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: performer
+        in: query
+        description: The reference to the practitioner
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: reason-code
+        in: query
+        description: Coded reason procedure performed
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: reason-reference
+        in: query
+        description: The justification that the procedure was performed
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: status
+        in: query
+        description: preparation | in-progress | not-done | on-hold | stopped | completed
+          | entered-in-error | unknown
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: subject
+        in: query
+        description: Search by subject
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - $ref: '#/components/parameters/_lastUpdatedParam'
+      - $ref: '#/components/parameters/_securityParam'
+      - $ref: '#/components/parameters/_tagParam'
+      - $ref: '#/components/parameters/_idParam'
+      - $ref: '#/components/parameters/_sourceParam'
+      - $ref: '#/components/parameters/_profileParam'
+      responses:
+        "200":
+          description: search Procedure operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/MedicationDispense/{id}:
+    get:
+      tags:
+      - MedicationDispense
+      parameters:
+      - name: id
+        in: path
+        description: logical identifier
+        required: true
+        schema:
+          type: string
+          example: null
+      responses:
+        "200":
+          description: read Procedure operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Procedure'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/MedicationDispense/_search:
+    post:
+      tags:
+      - MedicationDispense
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: search Patient operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+
   /fhir/r4/Observation:
     get:
       tags:
@@ -4804,6 +5414,601 @@ paths:
       - default: []
       x-auth-type: Application & Application User
 
+  /fhir/r4/ServiceRequest/:
+    get:
+      tags:
+      - ServiceRequest
+      parameters:
+      - name: code
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Code that identifies the allergy or intolerance\r\n* [Condition](condition.html):\
+          \ Code for the condition\r\n* [DeviceRequest](devicerequest.html): Code\
+          \ for what is being requested/ordered\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The code for the report, as opposed to codes for the atomic results, which\
+          \ are the names on the observation resource referred to from the result\r\
+          \n* [FamilyMemberHistory](familymemberhistory.html): A search by a condition\
+          \ code\r\n* [List](list.html): What the purpose of this list is\r\n* [Medication](medication.html):\
+          \ Returns medications for a specific code\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations of this medication code\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses of this medicine code\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions of this medication code\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements of this medication code\r\n* [Observation](observation.html):\
+          \ The code of the observation type\r\n* [Procedure](procedure.html): A code\
+          \ to identify a  procedure\r\n* [ServiceRequest](servicerequest.html): What\
+          \ is being requested/ordered"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: date
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Date first version of the resource instance was recorded\r\n* [CarePlan](careplan.html):\
+          \ Time period plan covers\r\n* [CareTeam](careteam.html): Time period team\
+          \ covers\r\n* [ClinicalImpression](clinicalimpression.html): When the assessment\
+          \ was documented\r\n* [Composition](composition.html): Composition editing\
+          \ time\r\n* [Consent](consent.html): When this Consent was created or indexed\r\
+          \n* [DiagnosticReport](diagnosticreport.html): The clinically relevant time\
+          \ of the report\r\n* [Encounter](encounter.html): A date within the period\
+          \ the Encounter lasted\r\n* [EpisodeOfCare](episodeofcare.html): The provided\
+          \ date search value falls within the episode of care's period\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ When history was recorded or last updated\r\n* [Flag](flag.html): Time\
+          \ period when flag is active\r\n* [Immunization](immunization.html): Vaccination\
+          \  (non)-Administration Date\r\n* [List](list.html): When the list was prepared\r\
+          \n* [Observation](observation.html): Obtained date/time. If the obtained\
+          \ element is a period, a date that falls in the period\r\n* [Procedure](procedure.html):\
+          \ When the procedure was performed\r\n* [RiskAssessment](riskassessment.html):\
+          \ When was assessment made?\r\n* [SupplyRequest](supplyrequest.html): When\
+          \ the request was made"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: date
+      - name: identifier
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ External ids for this item\r\n* [CarePlan](careplan.html): External Ids\
+          \ for this plan\r\n* [CareTeam](careteam.html): External Ids for this team\r\
+          \n* [Composition](composition.html): Version-independent identifier for\
+          \ the Composition\r\n* [Condition](condition.html): A unique identifier\
+          \ of the condition record\r\n* [Consent](consent.html): Identifier for this\
+          \ record (external references)\r\n* [DetectedIssue](detectedissue.html):\
+          \ Unique id for the detected issue\r\n* [DeviceRequest](devicerequest.html):\
+          \ Business identifier for request/order\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ An identifier for the report\r\n* [DocumentManifest](documentmanifest.html):\
+          \ Unique Identifier for the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Master Version Specific Identifier\r\n* [Encounter](encounter.html): Identifier(s)\
+          \ by which this encounter is known\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ Business Identifier(s) relevant for this EpisodeOfCare\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ A search by a record identifier\r\n* [Goal](goal.html): External Ids for\
+          \ this goal\r\n* [ImagingStudy](imagingstudy.html): Identifiers for the\
+          \ Study, such as DICOM Study Instance UID and Accession number\r\n* [Immunization](immunization.html):\
+          \ Business identifier\r\n* [List](list.html): Business identifier\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations with this external identifier\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses with this external identifier\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions with this external identifier\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements with this external identifier\r\n* [NutritionOrder](nutritionorder.html):\
+          \ Return nutrition orders with this external identifier\r\n* [Observation](observation.html):\
+          \ The unique id for a particular observation\r\n* [Procedure](procedure.html):\
+          \ A unique identifier for a procedure\r\n* [RiskAssessment](riskassessment.html):\
+          \ Unique identifier for the assessment\r\n* [ServiceRequest](servicerequest.html):\
+          \ Identifiers assigned to this order\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ External identifier\r\n* [SupplyRequest](supplyrequest.html): Business\
+          \ Identifier for SupplyRequest\r\n* [VisionPrescription](visionprescription.html):\
+          \ Return prescriptions with this external identifier"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: patient
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Who the sensitivity is for\r\n* [CarePlan](careplan.html): Who the care\
+          \ plan is for\r\n* [CareTeam](careteam.html): Who care team is for\r\n*\
+          \ [ClinicalImpression](clinicalimpression.html): Patient or group assessed\r\
+          \n* [Composition](composition.html): Who and/or what the composition is\
+          \ about\r\n* [Condition](condition.html): Who has the condition?\r\n* [Consent](consent.html):\
+          \ Who the consent applies to\r\n* [DetectedIssue](detectedissue.html): Associated\
+          \ patient\r\n* [DeviceRequest](devicerequest.html): Individual the service\
+          \ is ordered for\r\n* [DeviceUseStatement](deviceusestatement.html): Search\
+          \ by subject - a patient\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The subject of the report if a patient\r\n* [DocumentManifest](documentmanifest.html):\
+          \ The subject of the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Who/what is the subject of the document\r\n* [Encounter](encounter.html):\
+          \ The patient or group present at the encounter\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ The patient who is the focus of this episode of care\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ The identity of a subject to list family member history items for\r\n\
+          * [Flag](flag.html): The identity of a subject to list flags for\r\n* [Goal](goal.html):\
+          \ Who this goal is intended for\r\n* [ImagingStudy](imagingstudy.html):\
+          \ Who the study is about\r\n* [Immunization](immunization.html): The patient\
+          \ for the vaccination record\r\n* [List](list.html): If all resources have\
+          \ the same subject\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ The identity of a patient to list administrations  for\r\n* [MedicationDispense](medicationdispense.html):\
+          \ The identity of a patient to list dispenses  for\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Returns prescriptions for a specific patient\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Returns statements for a specific patient.\r\n* [NutritionOrder](nutritionorder.html):\
+          \ The identity of the person who requires the diet, formula or nutritional\
+          \ supplement\r\n* [Observation](observation.html): The subject that the\
+          \ observation is about (if patient)\r\n* [Procedure](procedure.html): Search\
+          \ by subject - a patient\r\n* [RiskAssessment](riskassessment.html): Who/what\
+          \ does assessment apply to?\r\n* [ServiceRequest](servicerequest.html):\
+          \ Search by subject - a patient\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ Patient for whom the item is supplied\r\n* [VisionPrescription](visionprescription.html):\
+          \ The identity of a patient to list dispenses for"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: encounter
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [Composition](composition.html):\
+          \ Context of the Composition\r\n* [DeviceRequest](devicerequest.html): Encounter\
+          \ during which request was created\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The Encounter when the order was made\r\n* [DocumentReference](documentreference.html):\
+          \ Context of the document  content\r\n* [Flag](flag.html): Alert relevant\
+          \ during encounter\r\n* [List](list.html): Context in which list created\r\
+          \n* [NutritionOrder](nutritionorder.html): Return nutrition orders with\
+          \ this encounter identifier\r\n* [Observation](observation.html): Encounter\
+          \ related to the observation\r\n* [Procedure](procedure.html): Encounter\
+          \ created as part of\r\n* [RiskAssessment](riskassessment.html): Where was\
+          \ assessment performed?\r\n* [ServiceRequest](servicerequest.html): An encounter\
+          \ in which this request is made\r\n* [VisionPrescription](visionprescription.html):\
+          \ Return prescriptions with this encounter identifier"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: based-on
+        in: query
+        description: A request for this procedure
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: category
+        in: query
+        description: Classification of the procedure
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: instantiates-canonical
+        in: query
+        description: Instantiates FHIR protocol or definition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: instantiates-uri
+        in: query
+        description: Instantiates external protocol or definition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: uri
+      - name: location
+        in: query
+        description: Where the procedure happened
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: part-of
+        in: query
+        description: Part of referenced event
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: performer
+        in: query
+        description: The reference to the practitioner
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: reason-code
+        in: query
+        description: Coded reason procedure performed
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: reason-reference
+        in: query
+        description: The justification that the procedure was performed
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: status
+        in: query
+        description: preparation | in-progress | not-done | on-hold | stopped | completed
+          | entered-in-error | unknown
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: subject
+        in: query
+        description: Search by subject
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - $ref: '#/components/parameters/_lastUpdatedParam'
+      - $ref: '#/components/parameters/_securityParam'
+      - $ref: '#/components/parameters/_tagParam'
+      - $ref: '#/components/parameters/_idParam'
+      - $ref: '#/components/parameters/_sourceParam'
+      - $ref: '#/components/parameters/_profileParam'
+      responses:
+        "200":
+          description: search Procedure operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/ServiceRequest/{id}:
+    get:
+      tags:
+      - ServiceRequest
+      parameters:
+      - name: id
+        in: path
+        description: logical identifier
+        required: true
+        schema:
+          type: string
+          example: null
+      responses:
+        "200":
+          description: read Procedure operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Procedure'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/ServiceRequest/_search:
+    post:
+      tags:
+      - ServiceRequest
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: search Patient operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+
+  /fhir/r4/Specimen/:
+    get:
+      tags:
+      - Specimen
+      parameters:
+      - name: code
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Code that identifies the allergy or intolerance\r\n* [Condition](condition.html):\
+          \ Code for the condition\r\n* [DeviceRequest](devicerequest.html): Code\
+          \ for what is being requested/ordered\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The code for the report, as opposed to codes for the atomic results, which\
+          \ are the names on the observation resource referred to from the result\r\
+          \n* [FamilyMemberHistory](familymemberhistory.html): A search by a condition\
+          \ code\r\n* [List](list.html): What the purpose of this list is\r\n* [Medication](medication.html):\
+          \ Returns medications for a specific code\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations of this medication code\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses of this medicine code\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions of this medication code\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements of this medication code\r\n* [Observation](observation.html):\
+          \ The code of the observation type\r\n* [Procedure](procedure.html): A code\
+          \ to identify a  procedure\r\n* [ServiceRequest](servicerequest.html): What\
+          \ is being requested/ordered"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: date
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Date first version of the resource instance was recorded\r\n* [CarePlan](careplan.html):\
+          \ Time period plan covers\r\n* [CareTeam](careteam.html): Time period team\
+          \ covers\r\n* [ClinicalImpression](clinicalimpression.html): When the assessment\
+          \ was documented\r\n* [Composition](composition.html): Composition editing\
+          \ time\r\n* [Consent](consent.html): When this Consent was created or indexed\r\
+          \n* [DiagnosticReport](diagnosticreport.html): The clinically relevant time\
+          \ of the report\r\n* [Encounter](encounter.html): A date within the period\
+          \ the Encounter lasted\r\n* [EpisodeOfCare](episodeofcare.html): The provided\
+          \ date search value falls within the episode of care's period\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ When history was recorded or last updated\r\n* [Flag](flag.html): Time\
+          \ period when flag is active\r\n* [Immunization](immunization.html): Vaccination\
+          \  (non)-Administration Date\r\n* [List](list.html): When the list was prepared\r\
+          \n* [Observation](observation.html): Obtained date/time. If the obtained\
+          \ element is a period, a date that falls in the period\r\n* [Procedure](procedure.html):\
+          \ When the procedure was performed\r\n* [RiskAssessment](riskassessment.html):\
+          \ When was assessment made?\r\n* [SupplyRequest](supplyrequest.html): When\
+          \ the request was made"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: date
+      - name: identifier
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ External ids for this item\r\n* [CarePlan](careplan.html): External Ids\
+          \ for this plan\r\n* [CareTeam](careteam.html): External Ids for this team\r\
+          \n* [Composition](composition.html): Version-independent identifier for\
+          \ the Composition\r\n* [Condition](condition.html): A unique identifier\
+          \ of the condition record\r\n* [Consent](consent.html): Identifier for this\
+          \ record (external references)\r\n* [DetectedIssue](detectedissue.html):\
+          \ Unique id for the detected issue\r\n* [DeviceRequest](devicerequest.html):\
+          \ Business identifier for request/order\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ An identifier for the report\r\n* [DocumentManifest](documentmanifest.html):\
+          \ Unique Identifier for the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Master Version Specific Identifier\r\n* [Encounter](encounter.html): Identifier(s)\
+          \ by which this encounter is known\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ Business Identifier(s) relevant for this EpisodeOfCare\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ A search by a record identifier\r\n* [Goal](goal.html): External Ids for\
+          \ this goal\r\n* [ImagingStudy](imagingstudy.html): Identifiers for the\
+          \ Study, such as DICOM Study Instance UID and Accession number\r\n* [Immunization](immunization.html):\
+          \ Business identifier\r\n* [List](list.html): Business identifier\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ Return administrations with this external identifier\r\n* [MedicationDispense](medicationdispense.html):\
+          \ Returns dispenses with this external identifier\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Return prescriptions with this external identifier\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Return statements with this external identifier\r\n* [NutritionOrder](nutritionorder.html):\
+          \ Return nutrition orders with this external identifier\r\n* [Observation](observation.html):\
+          \ The unique id for a particular observation\r\n* [Procedure](procedure.html):\
+          \ A unique identifier for a procedure\r\n* [RiskAssessment](riskassessment.html):\
+          \ Unique identifier for the assessment\r\n* [ServiceRequest](servicerequest.html):\
+          \ Identifiers assigned to this order\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ External identifier\r\n* [SupplyRequest](supplyrequest.html): Business\
+          \ Identifier for SupplyRequest\r\n* [VisionPrescription](visionprescription.html):\
+          \ Return prescriptions with this external identifier"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: patient
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [AllergyIntolerance](allergyintolerance.html):\
+          \ Who the sensitivity is for\r\n* [CarePlan](careplan.html): Who the care\
+          \ plan is for\r\n* [CareTeam](careteam.html): Who care team is for\r\n*\
+          \ [ClinicalImpression](clinicalimpression.html): Patient or group assessed\r\
+          \n* [Composition](composition.html): Who and/or what the composition is\
+          \ about\r\n* [Condition](condition.html): Who has the condition?\r\n* [Consent](consent.html):\
+          \ Who the consent applies to\r\n* [DetectedIssue](detectedissue.html): Associated\
+          \ patient\r\n* [DeviceRequest](devicerequest.html): Individual the service\
+          \ is ordered for\r\n* [DeviceUseStatement](deviceusestatement.html): Search\
+          \ by subject - a patient\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The subject of the report if a patient\r\n* [DocumentManifest](documentmanifest.html):\
+          \ The subject of the set of documents\r\n* [DocumentReference](documentreference.html):\
+          \ Who/what is the subject of the document\r\n* [Encounter](encounter.html):\
+          \ The patient or group present at the encounter\r\n* [EpisodeOfCare](episodeofcare.html):\
+          \ The patient who is the focus of this episode of care\r\n* [FamilyMemberHistory](familymemberhistory.html):\
+          \ The identity of a subject to list family member history items for\r\n\
+          * [Flag](flag.html): The identity of a subject to list flags for\r\n* [Goal](goal.html):\
+          \ Who this goal is intended for\r\n* [ImagingStudy](imagingstudy.html):\
+          \ Who the study is about\r\n* [Immunization](immunization.html): The patient\
+          \ for the vaccination record\r\n* [List](list.html): If all resources have\
+          \ the same subject\r\n* [MedicationAdministration](medicationadministration.html):\
+          \ The identity of a patient to list administrations  for\r\n* [MedicationDispense](medicationdispense.html):\
+          \ The identity of a patient to list dispenses  for\r\n* [MedicationRequest](medicationrequest.html):\
+          \ Returns prescriptions for a specific patient\r\n* [MedicationStatement](medicationstatement.html):\
+          \ Returns statements for a specific patient.\r\n* [NutritionOrder](nutritionorder.html):\
+          \ The identity of the person who requires the diet, formula or nutritional\
+          \ supplement\r\n* [Observation](observation.html): The subject that the\
+          \ observation is about (if patient)\r\n* [Procedure](procedure.html): Search\
+          \ by subject - a patient\r\n* [RiskAssessment](riskassessment.html): Who/what\
+          \ does assessment apply to?\r\n* [ServiceRequest](servicerequest.html):\
+          \ Search by subject - a patient\r\n* [SupplyDelivery](supplydelivery.html):\
+          \ Patient for whom the item is supplied\r\n* [VisionPrescription](visionprescription.html):\
+          \ The identity of a patient to list dispenses for"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: encounter
+        in: query
+        description: "Multiple Resources: \r\n\r\n* [Composition](composition.html):\
+          \ Context of the Composition\r\n* [DeviceRequest](devicerequest.html): Encounter\
+          \ during which request was created\r\n* [DiagnosticReport](diagnosticreport.html):\
+          \ The Encounter when the order was made\r\n* [DocumentReference](documentreference.html):\
+          \ Context of the document  content\r\n* [Flag](flag.html): Alert relevant\
+          \ during encounter\r\n* [List](list.html): Context in which list created\r\
+          \n* [NutritionOrder](nutritionorder.html): Return nutrition orders with\
+          \ this encounter identifier\r\n* [Observation](observation.html): Encounter\
+          \ related to the observation\r\n* [Procedure](procedure.html): Encounter\
+          \ created as part of\r\n* [RiskAssessment](riskassessment.html): Where was\
+          \ assessment performed?\r\n* [ServiceRequest](servicerequest.html): An encounter\
+          \ in which this request is made\r\n* [VisionPrescription](visionprescription.html):\
+          \ Return prescriptions with this encounter identifier"
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: based-on
+        in: query
+        description: A request for this procedure
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: category
+        in: query
+        description: Classification of the procedure
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: instantiates-canonical
+        in: query
+        description: Instantiates FHIR protocol or definition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: instantiates-uri
+        in: query
+        description: Instantiates external protocol or definition
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: uri
+      - name: location
+        in: query
+        description: Where the procedure happened
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: part-of
+        in: query
+        description: Part of referenced event
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: performer
+        in: query
+        description: The reference to the practitioner
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: reason-code
+        in: query
+        description: Coded reason procedure performed
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: reason-reference
+        in: query
+        description: The justification that the procedure was performed
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - name: status
+        in: query
+        description: preparation | in-progress | not-done | on-hold | stopped | completed
+          | entered-in-error | unknown
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: token
+      - name: subject
+        in: query
+        description: Search by subject
+        required: false
+        schema:
+          type: string
+          example: null
+        x-wso2-oh-fhirType: reference
+      - $ref: '#/components/parameters/_lastUpdatedParam'
+      - $ref: '#/components/parameters/_securityParam'
+      - $ref: '#/components/parameters/_tagParam'
+      - $ref: '#/components/parameters/_idParam'
+      - $ref: '#/components/parameters/_sourceParam'
+      - $ref: '#/components/parameters/_profileParam'
+      responses:
+        "200":
+          description: search Procedure operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/Specimen/{id}:
+    get:
+      tags:
+      - Specimen
+      parameters:
+      - name: id
+        in: path
+        description: logical identifier
+        required: true
+        schema:
+          type: string
+          example: null
+      responses:
+        "200":
+          description: read Procedure operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Procedure'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
+  /fhir/r4/Specimen/_search:
+    post:
+      tags:
+      - Specimen
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: search Patient operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
 
   /fhir/r4/.well-known/smart-configuration:
     get:
