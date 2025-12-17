@@ -2567,6 +2567,27 @@ paths:
       security:
       - default: []
       x-auth-type: Application & Application User
+  /fhir/r4/Encounter/_search:
+    post:
+      tags:
+      - Encounter
+      - POST
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: search Patient operation successful
+          content:
+            application/fhir+json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
+      security:
+      - default: []
+      x-auth-type: Application & Application User
 
   /fhir/r4/Goal/:
     get:
