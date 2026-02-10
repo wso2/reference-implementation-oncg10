@@ -2,8 +2,6 @@
 authEnabled = true
 searchUrl = "https://www.patientapp.publicvm.com/"
 tokenUrl = "https://api.asgardeo.io/t/wso2healthcare/oauth2/token"
-clientId = "W18lqgP3_UXGPXhhMFupu94AznUa"
-clientSecret = "Hm7gh7g_O79yf45gLvSsP3kLBZ2TyxGCTIEO6RzpY0Qa"
 scopes = [ "patient/AllergyIntolerance.read", "patient/CarePlan.read", "patient/Patient.read", "patient/CareTeam.read", "patient/Condition.read", "patient/Device.read", "patient/DiagnosticReport.read", "patient/DocumentReference.read", "patient/Goal.read", "patient/Immunization.read", "patient/MedicationRequest.read", "patient/Observation.read", "patient/Procedure.read", "patient/Encounter.read", "patient/Organization.read", "patient/Practitioner.read", "patient/Provenance.read", "user/Provenance.read" ]
 types = [ "Patient", "AllergyIntolerance", "CarePlan", "CareTeam", "Condition", "Device", "DiagnosticReport", "DocumentReference", "Goal", "Immunization", "MedicationRequest", "Observation", "Procedure", "Encounter", "Organization", "Practitioner", "Provenance" ]
 
