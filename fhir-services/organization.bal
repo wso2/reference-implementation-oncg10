@@ -28,7 +28,7 @@ import ballerinax/health.fhir.r4.uscore311;
 # Generic type to wrap all implemented profiles.
 # Add required profile types here.
 # public type Device r4:Device|<other_Device_Profile>;
-public type Organization uscore311:USCoreOrganizationProfile;
+public type Organization uscore610:USCoreOrganizationProfile;
 
 # A service representing a network-accessible API
 service /fhir/r4/Organization on new fhirr4:Listener(config = organizationApiConfig) {
@@ -37,7 +37,7 @@ service /fhir/r4/Organization on new fhirr4:Listener(config = organizationApiCon
     isolated resource function get [string id](r4:FHIRContext fhirContext) returns Organization|r4:OperationOutcome|r4:FHIRError|error {
         anydata|r4:OperationOutcome|r4:FHIRError|error result;
         lock {
-            result = fetchResourceById(fhirContext, "Organization", id, uscore311:USCoreOrganizationProfile);
+            result = fetchResourceById(fhirContext, "Organization", id, uscore610:USCoreOrganizationProfile);
         }
         if result is Organization {
             return result;

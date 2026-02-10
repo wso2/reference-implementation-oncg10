@@ -23,12 +23,12 @@
 import ballerina/http;
 import ballerinax/health.fhir.r4;
 import ballerinax/health.fhirr4;
-import ballerinax/health.fhir.r4.uscore311;
+import ballerinax/health.fhir.r4.uscore610;
 
 # Generic type to wrap all implemented profiles.
 # Add required profile types here.
 # public type Location r4:Location|<other_Location_Profile>;
-public type Location uscore311:USCoreLocation;
+public type Location uscore610:USCoreLocation;
 
 
 # A service representing a network-accessible API
@@ -37,7 +37,7 @@ service /fhir/r4/Location on new fhirr4:Listener(config = locationApiConfig) {
     isolated resource function get [string id](r4:FHIRContext fhirContext) returns Location|r4:OperationOutcome|r4:FHIRError|error {
         anydata|r4:OperationOutcome|r4:FHIRError|error result;
         lock {
-            result = fetchResourceById(fhirContext, "Location", id, uscore311:USCoreLocation);
+            result = fetchResourceById(fhirContext, "Location", id, Location);
         }
         if result is Location {
             return result;

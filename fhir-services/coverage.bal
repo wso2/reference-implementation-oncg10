@@ -23,24 +23,23 @@
 import ballerina/http;
 import ballerinax/health.fhir.r4;
 import ballerinax/health.fhirr4;
-import ballerinax/health.fhir.r4.uscore610;
+import ballerinax/health.fhir.r4.uscore700;
 
 # Generic type to wrap all implemented profiles.
 # Add required profile types here.
-# public type Observation r4:Observation|<other_Observation_Profile>;
-public type Observation uscore610:USCoreSmokingStatusProfile|uscore610:USCorePediatricBMIforAgeObservationProfile|uscore610:USCoreLaboratoryResultObservationProfile
-|uscore610:USCorePulseOximetryProfile|uscore610:USCoreObservationOccupationProfile|uscore610:USCoreObservationScreeningAssessmentProfile;
+# public type Coverage r4:Coverage;
+public type Coverage uscore700:USCoreCoverageProfile;
 
 # A service representing a network-accessible API
-service /fhir/r4/Observation on new fhirr4:Listener(config = observationApiConfig) {
+service /fhir/r4/Coverage on new fhirr4:Listener(config = coverageApiConfig) {
 
     // Read the current state of single resource based on its id.
-    isolated resource function get [string id](r4:FHIRContext fhirContext) returns Observation|r4:OperationOutcome|r4:FHIRError|error {
+    isolated resource function get [string id](r4:FHIRContext fhirContext) returns Coverage|r4:OperationOutcome|r4:FHIRError|error {
         anydata|r4:OperationOutcome|r4:FHIRError|error result;
         lock {
-            result = fetchResourceById(fhirContext, "Observation", id, uscore610:USCoreObservationScreeningAssessmentProfile);
+            result = fetchResourceById(fhirContext, "Coverage", id, uscore700:USCoreCoverageProfile);
         }
-        if result is Observation {
+        if result is Coverage {
             return result;
         }
         if result is r4:OperationOutcome|r4:FHIRError|error {
@@ -54,7 +53,7 @@ service /fhir/r4/Observation on new fhirr4:Listener(config = observationApiConfi
     isolated resource function get .(r4:FHIRContext fhirContext) returns r4:Bundle|r4:OperationOutcome|r4:FHIRError|error {
         r4:Bundle|r4:OperationOutcome|r4:FHIRError|error searchResult;
         lock {
-            searchResult = searchResourceBundle(fhirContext, "Observation");
+            searchResult = searchResourceBundle(fhirContext, "Coverage");
         }
         return searchResult;
     }
@@ -63,10 +62,8 @@ service /fhir/r4/Observation on new fhirr4:Listener(config = observationApiConfi
     isolated resource function post _search(r4:FHIRContext fhirContext) returns r4:Bundle|r4:OperationOutcome|r4:FHIRError|error {
         r4:Bundle|r4:OperationOutcome|r4:FHIRError|error searchResult;
         lock {
-            searchResult = searchResourceBundle(fhirContext, "Observation");
+            searchResult = searchResourceBundle(fhirContext, "Coverage");
         }
         return searchResult;
     }
 }
-
-

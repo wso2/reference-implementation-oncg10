@@ -23,12 +23,11 @@
 import ballerina/http;
 import ballerinax/health.fhir.r4;
 import ballerinax/health.fhirr4;
-import ballerinax/health.fhir.r4.uscore311;
+import ballerinax/health.fhir.r4.uscore610;
 
 # Generic type to wrap all implemented profiles.
 # Add required profile types here.
-# public type Condition r4:Condition|<other_Condition_Profile>;
-public type Condition uscore311:USCoreConditionEvidence|uscore311:USCoreCondition;
+public type Condition uscore610:USCoreConditionEncounterDiagnosisProfile|uscore610:USCoreConditionProblemsHealthConcernsProfile;
 
 # A service representing a network-accessible API
 service /fhir/r4/Condition on new fhirr4:Listener(config = conditionApiConfig) {
@@ -37,7 +36,7 @@ service /fhir/r4/Condition on new fhirr4:Listener(config = conditionApiConfig) {
     isolated resource function get [string id](r4:FHIRContext fhirContext) returns Condition|r4:OperationOutcome|r4:FHIRError|error {
         anydata|r4:OperationOutcome|r4:FHIRError|error result;
         lock {
-            result = fetchResourceById(fhirContext, "Condition", id, uscore311:USCoreCondition);
+            result = fetchResourceById(fhirContext, "Condition", id, Condition);
         }
         if result is Condition {
             return result;
